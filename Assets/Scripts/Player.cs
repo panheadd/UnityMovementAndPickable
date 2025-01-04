@@ -6,6 +6,17 @@ public class Player : MonoBehaviour
 {
     Vector3 currentJumpVelocity;
     bool isJumping;
+
+
+
+
+    void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.GetComponent<Pickable>())
+        {
+            other.gameObject.SetActive(false);
+        }
+    }
     
     // Start is called before the first frame update
     void Start()
