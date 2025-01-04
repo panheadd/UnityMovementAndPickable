@@ -19,8 +19,26 @@ public class Player : MonoBehaviour
         CharacterController controller = GetComponent<CharacterController>();
         Vector3 moveVelocity = Vector3.zero;
         
-        moveVelocity.x = Input.GetAxis("Horizontal");
+        //moveVelocity.x = Input.GetAxis("Horizontal");  // deleted will be ignored
         moveVelocity.z = Input.GetAxis("Vertical");
+
+        // Turn LEFT
+        if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            Vector3 currentRotation = transform.eulerAngles;
+            currentRotation.y = currentRotation.y-90f;
+            transform.eulerAngles = currentRotation;
+        }
+        //
+
+        //Turn Right
+        if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            Vector3 currentRotation = transform.eulerAngles;
+            currentRotation.y = currentRotation.y+90f;
+            transform.eulerAngles = currentRotation;
+        }
+        //
 
         if(Input.GetButtonDown("Jump"))
         {
