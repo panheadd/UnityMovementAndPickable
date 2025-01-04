@@ -7,21 +7,38 @@ public class Player : MonoBehaviour
     Vector3 currentJumpVelocity;
     bool isJumping;
 
+    public float speed = 5f;
+    public float boostedSpeed = 10f; 
+    public float boostDuration = 3f;
+    private float currentSpeed; 
+    private Coroutine boostCoroutine;
 
 
+
+    IEnumerator SpeedBoost()
+    {
+        currentSpeed = boostedSpeed;
+        yield return new WaitForSeconds(boostDuration);
+        currentSpeed = speed;
+    }
 
     void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.GetComponent<Pickable>())
         {
             other.gameObject.SetActive(false);
+             if (boostCoroutine != null)
+            {
+                StopCoroutine(boostCoroutine);
+            }
+                boostCoroutine = StartCoroutine(SpeedBoost());
         }
     }
     
     // Start is called before the first frame update
     void Start()
     {
-        
+        currentSpeed = speed;
     }
 
     // Update is called once per frame
@@ -31,7 +48,7 @@ public class Player : MonoBehaviour
         Vector3 moveVelocity = Vector3.zero;
         
         //moveVelocity.x = Input.GetAxis("Horizontal");  // deleted will be ignored
-        moveVelocity = transform.forward * Input.GetAxis("Vertical");
+        moveVelocity = transform.forward * Input.GetAxis("Vertical") * currentSpeed;
 
         // Turn LEFT
         if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
