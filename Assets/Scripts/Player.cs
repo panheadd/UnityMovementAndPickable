@@ -20,7 +20,7 @@ public class Player : MonoBehaviour
         Vector3 moveVelocity = Vector3.zero;
         
         //moveVelocity.x = Input.GetAxis("Horizontal");  // deleted will be ignored
-        moveVelocity.z = Input.GetAxis("Vertical");
+        moveVelocity = transform.forward * Input.GetAxis("Vertical");
 
         // Turn LEFT
         if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
